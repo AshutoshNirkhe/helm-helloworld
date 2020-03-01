@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.namespace }}
+    chart: {{ template "hellowworld.chart" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.hello.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.hello.service.port }}
+      targetPort: {{ .Values.hello.container.port }}
+      protocol: {{ .Values.hello.container.protocol }}
+    # another port for health check if using livenessprobe
+  selector:
+    app: {{ .Values.namespace }}
+status:
+  loadBalancer: {}

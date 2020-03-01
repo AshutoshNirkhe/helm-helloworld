@@ -1,0 +1,47 @@
+# allow everything on app's namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "{{ .Values.namespace }}-admin"
+  namespace: {{ .Values.namespace }}
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "delete", "patch", "use"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: "{{ .Values.namespace }}-admin"
+  namespace: {{ .Values.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io/v1
+  kind: Role
+  name: "{{ .Values.namespace }}-admin"
+subjects: 
+- kind: ServiceAccount
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+---
+
+# allow read only access to entire cluster, other namespace objects.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: "{{ .Values.namespace }}-view"
+  namespace: {{ .Values.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  name: "view"
+subjects: 
+- kind: ServiceAccount
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+---
+
+# https://pmcgrath.net/using-pod-security-policies-with-kubeadm
+# PSPs once applied, shall enforce 'default'(secure) policy to be used by 'system:authenticated' group and 
+# 'privileged' policy on 'system:serviceaccounts:kube-system' and 'system:nodes' groups.
+# So no need to create any extra roles for PSP in app's roles.yaml

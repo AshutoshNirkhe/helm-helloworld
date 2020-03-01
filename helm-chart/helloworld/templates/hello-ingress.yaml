@@ -1,0 +1,30 @@
+{{- if .Values.hello.ingress.enabled -}}
+{{- $ingressPath := .Values.hello.ingress.path  -}}
+{{- $serviceName := .Values.namespace -}}
+{{- $servicePort := .Values.hello.service.port  -}}
+apiVersion: networking/v1
+kind: ingress
+metadata:
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.namespace }}
+    chart: {{ template "hellowworld.chart" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.hello.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}  
+{{- end }}
+spec:
+  rules:
+  {{- range .Values.hello.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend: 
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- end }}
+{{- end }}
