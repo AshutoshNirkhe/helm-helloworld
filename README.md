@@ -8,7 +8,7 @@
 
 
 
-### install helm chart 
+### Install helm chart 
 - 'helm-chart/helloworld' contains all the template yamls for deploying the Hello World node.js app in kubernetes.
 - Modify values.yaml to suit your needs.
 - Install the chart 
