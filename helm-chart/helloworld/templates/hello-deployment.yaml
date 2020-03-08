@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Values.namespace }}
-    chart: {{ template "hellowworld.chart" }}
+    chart: {{ template "helloworld.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -29,8 +29,8 @@ spec:
           imagePullolicy: {{ .Values.hello.image.pullpolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.container.port }}
-              protocol: {{ .Values.container.protocol }}
+              containerPort: {{ .Values.hello.container.port }}
+              protocol: {{ .Values.hello.container.protocol }}
           resources:
 {{ toYaml .Values.hello.resources | indent 12 }}
           # livenessProbe

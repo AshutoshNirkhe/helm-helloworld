@@ -1,7 +1,7 @@
 {{- if .Values.hello.ingress.enabled -}}
-{{- $ingressPath := .Values.hello.ingress.path  -}}
+{{- $ingressPath := .Values.hello.ingress.path -}}
 {{- $serviceName := .Values.namespace -}}
-{{- $servicePort := .Values.hello.service.port  -}}
+{{- $servicePort := .Values.hello.service.port -}}
 apiVersion: networking/v1
 kind: ingress
 metadata:
@@ -9,7 +9,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Values.namespace }}
-    chart: {{ template "hellowworld.chart" }}
+    chart: {{ template "helloworld.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 {{- with .Values.hello.ingress.annotations }}
