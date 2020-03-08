@@ -2,7 +2,7 @@
 {{- $ingressPath := .Values.hello.ingress.path -}}
 {{- $serviceName := .Values.namespace -}}
 {{- $servicePort := .Values.hello.service.port -}}
-apiVersion: networking/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: ingress
 metadata:
   name: {{ .Values.namespace }}
