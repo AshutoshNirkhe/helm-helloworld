@@ -23,4 +23,4 @@ steps:
     repository: 'a5hut0sh/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: 'helloworld-nodejs-app/Dockerfile'
-    tags: '1'
+    tags: '1.0'
