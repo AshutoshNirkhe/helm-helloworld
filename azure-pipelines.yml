@@ -20,7 +20,7 @@ steps:
   displayName: Build an image
   inputs:
     containerRegistry: 'Docker Hub Registry with Token'
-    repository: '$(imageName)'
+    repository: 'a5hut0sh/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: 'helloworld-nodejs-app/Dockerfile'
     tags: '1'
